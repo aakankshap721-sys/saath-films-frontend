@@ -1,0 +1,63 @@
+<div class="min-h-screen bg-sky-50">
+
+  <div class="container mx-auto px-6 py-20 max-w-2xl">
+
+
+<h1 class="text-6xl font-serif text-center mb-4">
+  Get In Touch
+</h1>
+
+<p class="text-center text-gray-500 mb-12">
+  We'd love to hear about your event.
+</p>
+
+<div class="bg-white rounded-3xl shadow-xl p-10">
+
+  <form (ngSubmit)="onSubmit()" class="space-y-6">
+
+    <input
+      [(ngModel)]="formData.name"
+      name="name"
+      placeholder="Your Name"
+      required
+      class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:border-sky-400">
+
+    <input
+      [(ngModel)]="formData.email"
+      name="email"
+      type="email"
+      placeholder="Email Address"
+      required
+      class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:border-sky-400">
+
+    <input
+      [(ngModel)]="formData.phone"
+      name="phone"
+      placeholder="Phone Number"
+      class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:border-sky-400">
+
+    <textarea
+      [(ngModel)]="formData.message"
+      name="message"
+      rows="6"
+      placeholder="Tell us about your event..."
+      required
+      class="w-full p-4 border border-gray-200 rounded-2xl focus:outline-none focus:border-sky-400">
+    </textarea>
+
+    <button
+      type="submit"
+      class="w-full bg-black text-white py-5 rounded-2xl text-lg font-medium hover:opacity-90">
+
+      Send Enquiry via WhatsApp
+
+    </button>
+
+  </form>
+
+</div>
+
+
+  </div>
+
+</div>

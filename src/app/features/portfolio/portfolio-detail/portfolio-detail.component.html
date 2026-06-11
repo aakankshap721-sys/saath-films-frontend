@@ -1,0 +1,91 @@
+<div *ngIf="loading" class="flex items-center justify-center min-h-screen">
+  <div class="animate-spin w-12 h-12 border-4 border-black border-t-transparent rounded-full"></div>
+</div>
+
+<div *ngIf="!loading && !portfolio" class="text-center py-40">
+  <p class="text-3xl text-gray-400">Portfolio not found.</p>
+  <a routerLink="/portfolio" class="mt-6 inline-block underline">← Back to Portfolio</a>
+</div>
+
+<div *ngIf="portfolio" class="min-h-screen">
+  <!-- Hero Banner -->
+  <div class="relative h-[60vh] overflow-hidden">
+    <img [src]="portfolio.coverImage" [alt]="portfolio.title"
+         class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/50 flex items-end">
+      <div class="container mx-auto px-6 pb-12 text-white">
+        <span class="text-sm uppercase tracking-widest text-amber-400">{{ portfolio.category.name }}</span>
+        <h1 class="text-5xl md:text-7xl font-serif mt-2">{{ portfolio.title }}</h1>
+        <p class="mt-4 text-lg text-white/80">{{ portfolio.location }} &bull; {{ portfolio.shootDate | date:'MMMM yyyy' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Strip -->
+  <div class="bg-zinc-950 text-white py-10">
+    <div class="container mx-auto px-6 flex flex-wrap gap-10 text-sm">
+      <div>
+        <p class="text-zinc-500 uppercase tracking-wider mb-1">Client</p>
+        <p class="text-xl font-medium">{{ portfolio.clientName }}</p>
+      </div>
+      <div>
+        <p class="text-zinc-500 uppercase tracking-wider mb-1">Location</p>
+        <p class="text-xl font-medium">{{ portfolio.location }}</p>
+      </div>
+      <div>
+        <p class="text-zinc-500 uppercase tracking-wider mb-1">Category</p>
+        <p class="text-xl font-medium">{{ portfolio.category.name }}</p>
+      </div>
+      <div>
+        <p class="text-zinc-500 uppercase tracking-wider mb-1">Views</p>
+        <p class="text-xl font-medium">{{ portfolio.viewCount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div *ngIf="portfolio.description" class="container mx-auto px-6 py-16 max-w-3xl text-center">
+    <p class="text-xl text-gray-600 leading-relaxed">{{ portfolio.description }}</p>
+  </div>
+
+  <!-- Image Grid -->
+  <div class="container mx-auto px-6 pb-20">
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      <div *ngFor="let img of portfolio.images; let i = index"
+           class="break-inside-avoid cursor-zoom-in group"
+           (click)="openLightbox(i)">
+        <img [src]="img.thumbnailUrl || img.imageUrl" [alt]="img.altText || portfolio.title"
+             class="w-full rounded-2xl shadow-lg group-hover:scale-[1.02] transition-transform duration-500 object-cover">
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="bg-zinc-950 text-white py-24 text-center">
+    <h2 class="text-5xl font-serif mb-6">Love What You See?</h2>
+    <p class="text-zinc-400 mb-10 text-lg">Book a session and let us tell your story.</p>
+    <a routerLink="/booking"
+       class="inline-block bg-amber-400 text-black px-12 py-5 rounded-full text-lg font-semibold hover:bg-amber-300 transition">
+      Book Your Session
+    </a>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div *ngIf="lightboxIndex !== null && portfolio"
+     class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+     (click)="closeLightbox()">
+  <button class="absolute top-6 right-8 text-white text-4xl leading-none hover:text-amber-400"
+          (click)="closeLightbox()">&times;</button>
+  <button class="absolute left-6 text-white text-5xl hover:text-amber-400 px-4 py-2"
+          (click)="$event.stopPropagation(); prevImage()">&#8249;</button>
+  <img [src]="portfolio.images[lightboxIndex].imageUrl"
+       [alt]="portfolio.images[lightboxIndex].altText"
+       class="max-h-[90vh] max-w-[90vw] rounded-xl shadow-2xl object-contain"
+       (click)="$event.stopPropagation()">
+  <button class="absolute right-6 text-white text-5xl hover:text-amber-400 px-4 py-2"
+          (click)="$event.stopPropagation(); nextImage()">&#8250;</button>
+  <p class="absolute bottom-6 text-zinc-400 text-sm">
+    {{ lightboxIndex + 1 }} / {{ portfolio.images.length }}
+  </p>
+</div>

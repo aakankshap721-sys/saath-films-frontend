@@ -1,0 +1,101 @@
+<header class="fixed top-0 inset-x-0 z-50 bg-black/80 backdrop-blur-md text-white">
+  <div class="container mx-auto px-6 flex items-center justify-between h-20">
+    <a routerLink="/" class="flex items-center">
+  <img
+    src="assets/images/saath_films_logo.png"
+    alt="Saath Films"
+    class="h-16 md:h-18 lg:h-20 w-auto object-contain">
+</a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wider uppercase">
+
+      <a href="#home"
+   class="hover:text-amber-400 transition">
+   Home
+</a>
+     <a href="#portfolio"
+   [class.text-amber-400]="activeSection === 'portfolio'"
+   class="hover:text-amber-400 transition">
+   Portfolio
+</a>
+
+<a href="#services"
+   [class.text-amber-400]="activeSection === 'services'"
+   class="hover:text-amber-400 transition">
+   Services
+</a>
+
+<a href="#blog"
+   [class.text-amber-400]="activeSection === 'blog'"
+   class="hover:text-amber-400 transition">
+   Blog
+</a>
+
+<a href="#about"
+   [class.text-amber-400]="activeSection === 'about'"
+   class="hover:text-amber-400 transition">
+   About
+</a>
+
+<a href="#contact"
+   [class.text-amber-400]="activeSection === 'contact'"
+   class="hover:text-amber-400 transition">
+   Contact
+</a>
+      <ng-container *ngIf="authService.isAuthenticated(); else guestNav">
+      
+      </ng-container>
+
+      <ng-template #guestNav>
+        <a routerLink="/booking"
+           class="px-6 py-2.5 bg-white text-black rounded-full font-semibold hover:bg-amber-400 transition">
+          Book Now
+        </a>
+       
+      </ng-template>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button class="md:hidden p-2" (click)="toggleMenu()" aria-label="Toggle menu">
+      <svg *ngIf="!menuOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      <svg *ngIf="menuOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="menuOpen" class="md:hidden bg-black/95 border-t border-zinc-800 px-6 py-6 space-y-4 text-sm uppercase tracking-wider font-medium">
+
+    <a href="#home" (click)="menuOpen=false" class="block hover:text-amber-400">Home</a>
+
+   <a href="#portfolio" (click)="menuOpen=false" class="block hover:text-amber-400">
+  Portfolio
+</a>
+
+<a href="#services" (click)="menuOpen=false" class="block hover:text-amber-400">
+  Services
+</a>
+
+<a href="#blog" (click)="menuOpen=false" class="block hover:text-amber-400">
+  Blog
+</a>
+
+<a href="#about" (click)="menuOpen=false" class="block hover:text-amber-400">
+  About
+</a>
+
+<a href="#contact" (click)="menuOpen=false" class="block hover:text-amber-400">
+  Contact
+</a>
+    <a routerLink="/booking"   (click)="menuOpen=false"
+       class="block mt-4 text-center py-3 bg-white text-black rounded-full font-semibold">Book Now</a>
+    
+  </div>
+</header>
+
+<!-- Spacer so content doesn't go under fixed header -->
+<div class="h-20"></div>

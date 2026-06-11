@@ -1,0 +1,57 @@
+<div *ngIf="loading" class="flex items-center justify-center min-h-screen">
+  <div class="animate-spin w-12 h-12 border-4 border-black border-t-transparent rounded-full"></div>
+</div>
+
+<div *ngIf="!loading && !post" class="text-center py-40">
+  <p class="text-3xl text-gray-400">Post not found.</p>
+  <a routerLink="/blog" class="mt-6 inline-block underline">← Back to Blog</a>
+</div>
+
+<article *ngIf="post" class="min-h-screen">
+  <!-- Hero -->
+  <div class="relative h-[60vh] overflow-hidden">
+    <img [src]="post.coverImage" [alt]="post.title" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black/60 flex items-end">
+      <div class="container mx-auto px-6 pb-16 text-white max-w-4xl">
+        <div class="flex gap-3 mb-4">
+          <span *ngFor="let tag of (post.tags || '').split(',').slice(0,3)"
+                class="text-xs px-3 py-1 bg-amber-400 text-black rounded-full font-semibold">
+            {{ tag.trim() }}
+          </span>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-serif leading-tight">{{ post.title }}</h1>
+        <div class="flex items-center gap-4 mt-6 text-white/70">
+          <img [src]="post.author?.avatarUrl" class="w-10 h-10 rounded-full object-cover">
+          <span>{{ post.author?.name }}</span>
+          <span>&bull;</span>
+          <span>{{ post.publishedAt | date:'MMMM d, yyyy' }}</span>
+          <span>&bull;</span>
+          <span>{{ post.viewCount }} views</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container mx-auto px-6 py-20 max-w-3xl">
+    <p class="text-2xl text-gray-500 font-light mb-12 leading-relaxed">{{ post.excerpt }}</p>
+    <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed" [innerHTML]="post.content"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="bg-gray-50 py-20 text-center">
+    <h2 class="text-4xl font-serif mb-4">Ready to Create Your Story?</h2>
+    <p class="text-gray-500 mb-8">Let's capture your most beautiful moments.</p>
+    <a routerLink="/booking"
+       class="inline-block bg-black text-white px-12 py-5 rounded-full text-lg font-semibold hover:bg-amber-400 hover:text-black transition">
+      Book a Session
+    </a>
+  </div>
+
+  <!-- Back Link -->
+  <div class="container mx-auto px-6 py-10">
+    <a routerLink="/blog" class="inline-flex items-center gap-2 text-gray-500 hover:text-black transition">
+      ← Back to Blog
+    </a>
+  </div>
+</article>

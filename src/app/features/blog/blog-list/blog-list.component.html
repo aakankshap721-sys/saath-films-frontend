@@ -1,0 +1,121 @@
+<div class="min-h-screen bg-white">
+  <!-- Header -->
+  <div class="bg-zinc-950 text-white py-20 text-center">
+    <h1 class="text-7xl font-serif mb-4">Stories &amp; Insights</h1>
+    <p class="text-zinc-400 text-xl">Behind the lens — photography tips, real weddings, and inspiration.</p>
+  </div>
+
+  <div class="container mx-auto px-6 py-20">
+    <!-- Loading -->
+    <div *ngIf="loading" data-aos="fade-up" class="grid md:grid-cols-3 gap-10">
+      <div *ngFor="let i of [1,2,3,4,5,6]" class="rounded-3xl bg-gray-100 animate-pulse h-96"></div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div *ngIf="!loading" data-aos="fade-up" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <article *ngFor="let post of posts"
+      data-aos="zoom-in"
+               class="group rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+        <a [routerLink]="['/blog', post.slug]">
+          <div class="overflow-hidden h-64">
+            <img [src]="post.coverImage" [alt]="post.title"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          </div>
+          <div class="p-8">
+            <div class="flex gap-3 mb-4">
+              <span *ngFor="let tag of (post.tags || '').split(',').slice(0,2)"
+                    class="text-xs px-3 py-1 bg-amber-100 text-amber-700 rounded-full font-medium">
+                {{ tag.trim() }}
+              </span>
+            </div>
+            <h2 class="text-2xl font-serif mb-3 group-hover:text-amber-500 transition-colors">{{ post.title }}</h2>
+            <p class="text-gray-500 text-sm mb-4">{{ post.excerpt }}</p>
+            <div class="flex items-center gap-3 text-sm text-gray-400">
+              <img [src]="post.author?.avatarUrl" [alt]="post.author?.name"
+                   class="w-8 h-8 rounded-full object-cover">
+              <span>{{ post.author.name }}</span>
+              <span>&bull;</span>
+              <span>{{ post.publishedAt | date:'MMM d, yyyy' }}</span>
+            </div>
+          </div>
+        </a>
+      </article>
+    </div>
+
+
+<!-- PASTE VIDEO SECTION HERE -->
+
+<section class="mt-7" data-aos="fade-up">
+  <div class="text-center mb-12">
+    <h2 class="text-5xl font-serif mb-4">
+      Featured Pre-Wedding Films
+    </h2>
+    <p class="text-gray-500 text-lg">
+      Watch some of our beautiful love stories captured by Saath Films.
+    </p>
+  </div>
+
+  <div class="grid lg:grid-cols-2 gap-10">
+
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+      <iframe
+        class="w-full h-[400px]"
+        src="https://www.youtube.com/embed/-HtxMZm_4vM"
+        title="Best Prewedding In Matheran"
+        allowfullscreen>
+      </iframe>
+
+      <div class="p-6">
+        <h3 class="text-2xl font-serif">
+          Best Prewedding In Matheran (Rahul & Rupal)
+        </h3>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+      <iframe
+        class="w-full h-[400px]"
+        src="https://www.youtube.com/embed/mhY24KT_1uM"
+        title="Coffee Love Story"
+        allowfullscreen>
+      </iframe>
+
+      <div class="p-6">
+        <h3 class="text-2xl font-serif">
+          A Love Story Brewed Over Coffee ☕❤️
+        </h3>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center mt-16">
+    <a
+      href="https://youtube.com/@saath_films"
+      target="_blank"
+      class="inline-block bg-red-600 text-white px-10 py-4 rounded-full font-semibold">
+      Visit Saath Films YouTube Channel
+    </a>
+  </div>
+
+   <div class="text-center mt-8">
+    <a
+      href="https://www.instagram.com/saath_films.in?igsh=MWZhajlubzJ6d2FjaQ=="
+      target="_blank"
+      class="inline-block bg-red-600 text-white px-10 py-4 rounded-full font-semibold">
+      Visit Saath Films Instagram Page
+    </a>
+  </div>
+</section>
+
+    <!-- Load More -->
+    <div *ngIf="!loading && page < totalPages - 1" class="text-center mt-16">
+      <button (click)="loadMore()"
+              class="px-12 py-4 border-2 border-black rounded-full font-semibold hover:bg-black hover:text-white transition">
+        Load More Posts
+      </button>
+    </div>
+
+   
+  </div>
+</div>

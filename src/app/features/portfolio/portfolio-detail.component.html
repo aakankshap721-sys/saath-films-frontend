@@ -1,0 +1,9 @@
+<div class="container mx-auto px-6 py-12">
+  <h1 class="text-5xl font-serif">{{ portfolio.title }}</h1>
+  <p class="text-xl text-gray-600 mt-2">{{ portfolio.location }} • {{ portfolio.shootDate }}</p>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+    <img *ngFor="let img of portfolio.images" [src]="img.imageUrl" 
+         class="rounded-2xl shadow-xl hover:scale-105 transition-transform cursor-zoom-in">
+  </div>
+</div>

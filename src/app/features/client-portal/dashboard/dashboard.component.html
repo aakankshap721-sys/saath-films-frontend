@@ -1,0 +1,95 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="container mx-auto px-6 py-16">
+    <!-- Greeting -->
+    <div class="mb-12">
+      <h1 class="text-5xl font-serif">
+        Welcome, {{ authService.user()?.firstName }} 👋
+      </h1>
+      <p class="text-gray-500 mt-2">Here's an overview of your bookings and galleries.</p>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="grid md:grid-cols-3 gap-6 mb-16">
+      <div class="bg-white rounded-3xl p-8 shadow-md text-center">
+        <p class="text-5xl font-bold">{{ bookings.length }}</p>
+        <p class="text-gray-500 mt-2">Total Bookings</p>
+      </div>
+      <div class="bg-white rounded-3xl p-8 shadow-md text-center">
+        <p class="text-5xl font-bold">{{ galleries.length }}</p>
+        <p class="text-gray-500 mt-2">Private Galleries</p>
+      </div>
+      <div class="bg-zinc-950 text-white rounded-3xl p-8 text-center flex flex-col justify-center">
+        <p class="text-lg font-medium mb-4">Have an upcoming event?</p>
+        <a routerLink="/booking" class="bg-amber-400 text-black py-3 px-8 rounded-full font-semibold hover:bg-amber-300 transition">
+          Book a Session
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-serif mb-8">Recent Bookings</h2>
+      <div *ngIf="bookings.length === 0" class="bg-white rounded-3xl p-10 text-center text-gray-400">
+        No bookings yet. <a routerLink="/booking" class="text-black underline">Make your first booking →</a>
+      </div>
+      <div class="space-y-4">
+        <div *ngFor="let booking of bookings.slice(0,5)"
+             class="bg-white rounded-2xl p-6 shadow-sm flex flex-wrap justify-between items-center gap-4">
+          <div>
+            <p class="font-semibold text-lg">{{ booking.service?.name }}</p>
+            <p class="text-gray-500 text-sm">{{ booking.eventDate | date:'MMMM d, yyyy' }} • {{ booking.eventLocation }}</p>
+            <p class="text-xs text-gray-400 mt-1">#{{ booking.bookingNumber }}</p>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="px-4 py-2 rounded-full text-xs font-bold uppercase"
+                  [class.bg-yellow-100]="booking.status === 'PENDING'"
+                  [class.text-yellow-700]="booking.status === 'PENDING'"
+                  [class.bg-green-100]="booking.status === 'CONFIRMED'"
+                  [class.text-green-700]="booking.status === 'CONFIRMED'"
+                  [class.bg-blue-100]="booking.status === 'IN_PROGRESS'"
+                  [class.text-blue-700]="booking.status === 'IN_PROGRESS'"
+                  [class.bg-purple-100]="booking.status === 'COMPLETED'"
+                  [class.text-purple-700]="booking.status === 'COMPLETED'"
+                  [class.bg-red-100]="booking.status === 'CANCELLED'"
+                  [class.text-red-700]="booking.status === 'CANCELLED'">
+              {{ booking.status }}
+            </span>
+            <p class="font-bold">₹{{ booking.totalAmount | number }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Galleries -->
+    <div>
+      <h2 class="text-3xl font-serif mb-8">Your Galleries</h2>
+      <div *ngIf="galleries.length === 0" class="bg-white rounded-3xl p-10 text-center text-gray-400">
+        No galleries available yet. They'll appear here when ready.
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a *ngFor="let gallery of galleries"
+           [routerLink]="['/client/galleries', gallery.id]"
+           class="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+          <div class="relative h-48 overflow-hidden bg-gray-100">
+            <img *ngIf="gallery.coverImage" [src]="gallery.coverImage" [alt]="gallery.title"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div *ngIf="!gallery.coverImage" class="flex items-center justify-center h-full text-4xl">📁</div>
+            <span class="absolute top-3 right-3 bg-black/70 text-white text-xs px-3 py-1 rounded-full">
+              {{ gallery.totalImages }} photos
+            </span>
+          </div>
+          <div class="p-6">
+            <h3 class="font-serif text-xl">{{ gallery.title }}</h3>
+            <p class="text-gray-400 text-sm mt-1">{{ gallery.createdAt | date:'MMM d, yyyy' }}</p>
+            <p *ngIf="gallery.isDownloadable" class="text-green-600 text-xs mt-2">✓ Download Available</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="text-center mt-20">
+      <button (click)="logout()" class="text-gray-400 hover:text-red-500 transition text-sm">Logout</button>
+    </div>
+  </div>
+</div>

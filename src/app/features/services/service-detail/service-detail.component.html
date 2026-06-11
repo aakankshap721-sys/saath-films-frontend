@@ -1,0 +1,49 @@
+<div *ngIf="service">
+
+  <div class="relative h-[60vh]">
+
+    <img
+      [src]="service.coverImage"
+      class="w-full h-full object-cover">
+
+    <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
+
+      <div class="text-center text-white">
+
+        <h1 class="text-7xl font-serif">
+          {{service.name}}
+        </h1>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="max-w-4xl mx-auto py-20 px-6">
+
+    <h2 class="text-4xl font-serif mb-6">
+      About This Service
+    </h2>
+
+    <p class="text-lg text-gray-600 leading-relaxed">
+      {{service.description}}
+    </p>
+
+     <a
+    [href]="service.driveLink"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="bg-amber-600 text-white px-10 py-4 rounded-full hover:bg-amber-700">
+    View Gallery
+  </a>
+
+    <a
+      routerLink="/booking"
+      class="mt-10 inline-block bg-black text-white px-10 py-4 rounded-full">
+      Book Now
+    </a>
+
+  </div>
+
+</div>

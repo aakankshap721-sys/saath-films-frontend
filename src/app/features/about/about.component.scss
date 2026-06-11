@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.about-page {
+  min-height: 100vh;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url('/assets/images/photograph-instruments.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.overlay {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+h1,
+h2 {
+  letter-spacing: -1px;
+}
+
+ul li {
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    background-attachment: scroll;
+  }
+
+  h1 {
+    font-size: 3rem !important;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
